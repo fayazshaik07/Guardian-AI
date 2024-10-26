@@ -1,0 +1,83 @@
+{
+    "Compute": [
+        "Virtual Machines (VMs)",
+        "Azure Functions (serverless computing)",
+        "Azure Kubernetes Service (AKS)",
+        "App Service",
+        "Azure Batch",
+        "Azure Spring Apps"
+    ],
+    "Storage": [
+        "Azure Blob Storage",
+        "Azure Files",
+        "Azure Queue Storage",
+        "Azure Table Storage",
+        "Azure Disk Storage",
+        "Azure Archive Storage"
+    ],
+    "Databases": [
+        "Azure SQL Database",
+        "Azure Cosmos DB",
+        "Azure Database for MySQL",
+        "Azure Database for PostgreSQL",
+        "Azure Database for MariaDB",
+        "Azure Cache for Redis"
+    ],
+    "Networking": [
+        "Azure Virtual Network (VNet)",
+        "Azure Load Balancer",
+        "Azure Application Gateway",
+        "Azure VPN Gateway",
+        "Azure ExpressRoute",
+        "Azure DNS"
+    ],
+    "Security & Identity": [
+        "Azure Active Directory (AAD)",
+        "Azure Security Center",
+        "Azure Key Vault",
+        "Azure Sentinel",
+        "Azure Policy"
+    ],
+    "AI & Machine Learning": [
+        "Azure Machine Learning",
+        "Cognitive Services",
+        "Azure Bot Services"
+    ],
+    "Analytics": [
+        "Azure Synapse Analytics",
+        "Azure HDInsight",
+        "Azure Databricks",
+        "Azure Stream Analytics",
+        "Azure Data Lake Storage"
+    ],
+    "Developer Tools": [
+        "Azure DevOps",
+        "Azure DevTest Labs",
+        "Visual Studio App Center"
+    ],
+    "Internet of Things (IoT)": [
+        "Azure IoT Hub",
+        "Azure IoT Central",
+        "Azure Digital Twins"
+    ],
+    "Management & Governance": [
+        "Azure Monitor",
+        "Azure Automation",
+        "Azure Resource Manager (ARM)",
+        "Azure Cost Management"
+    ],
+    "Integration": [
+        "Azure Logic Apps",
+        "Azure Service Bus",
+        "Azure Event Grid"
+    ],
+    "Migration": [
+        "Azure Migrate",
+        "Azure Site Recovery"
+    ],
+    "Others": [
+        "Azure Blockchain Service",
+        "Azure Media Services",
+        "Azure Functions Proxies"
+    ]
+}

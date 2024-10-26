@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Homepage from './components/Homepage';
+import CountrySelection from './components/CountrySelection';
+import CloudProviderSelection from './components/CloudProviderSelection';
+import PaymentGatewaySelection from './components/PaymentGatewaySelection';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/country" element={<CountrySelection />} />
+        <Route path="/payment-gateway" element={<PaymentGatewaySelection />} />
+        <Route path="/cloud-provider" element={<CloudProviderSelection />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
