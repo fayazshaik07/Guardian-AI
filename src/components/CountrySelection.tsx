@@ -8,10 +8,12 @@ import euFlag from "../assets/countries/de.png";
 import { CSSProperties } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Button } from "@mui/material";
+import { Button, Autocomplete, TextField } from "@mui/material";
+
 interface CountrySelectionProps {
   onRegionSelect: () => void;
 }
+
 interface Country {
   name: string;
   flag: string;
@@ -23,63 +25,28 @@ const countries: Country[] = [
     name: "USA",
     flag: usaFlag,
     regions: [
-      "Alabama",
-      "Alaska",
-      "Arizona",
-      "Arkansas",
-      "California",
-      "Colorado",
-      "Connecticut",
-      "Delaware",
-      "Florida",
-      "Georgia",
-      "Hawaii",
-      "Idaho",
-      "Illinois",
-      "Indiana",
-      "Iowa",
-      "Kansas",
-      "Kentucky",
-      "Louisiana",
-      "Maine",
-      "Maryland",
-      "Massachusetts",
-      "Michigan",
-      "Minnesota",
-      "Mississippi",
-      "Missouri",
-      "Montana",
-      "Nebraska",
-      "Nevada",
-      "New Hampshire",
-      "New Jersey",
-      "New Mexico",
-      "New York",
-      "North Carolina",
-      "North Dakota",
-      "Ohio",
-      "Oklahoma",
-      "Oregon",
-      "Pennsylvania",
-      "Rhode Island",
-      "South Carolina",
-      "South Dakota",
-      "Tennessee",
-      "Texas",
-      "Utah",
-      "Vermont",
-      "Virginia",
-      "Washington",
-      "West Virginia",
-      "Wisconsin",
-      "Wyoming",
+      "Alabama", "Alaska", "Arizona", "Arkansas", "California",
+      "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
+      "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",
+      "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts",
+      "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana",
+      "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
+      "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma",
+      "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+      "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+      "West Virginia", "Wisconsin", "Wyoming",
     ],
   },
-
   {
     name: "UK",
     flag: ukFlag,
-    regions: ["England", "Scotland", "Wales", "Northern Ireland"],
+    regions: [
+      "England", "Scotland", "Wales", "Northern Ireland",
+      "Greater London", "West Midlands", "Greater Manchester",
+      "West Yorkshire", "Merseyside", "South Yorkshire",
+      "Tyne and Wear", "Glasgow", "Birmingham", "Liverpool",
+      "Edinburgh", "Cardiff", "Bristol", "Leeds", "Sheffield"
+    ],
   },
   {
     name: "China",
@@ -107,36 +74,26 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({
   onRegionSelect,
 }) => {
   const [selectedCountry, setSelectedCountry] = useState<Country | any>(null);
+  const [selectedRegion, setSelectedRegion] = useState<string | any>(null);
+  const [message, setMessage] = useState<string>(""); // New state for message
 
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-  // Carousel responsive configuration
   const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 6,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 5,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 3,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 2,
-    },
+    superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 6 },
+    desktop: { breakpoint: { max: 3000, min: 1024 }, items: 5 },
+    tablet: { breakpoint: { max: 1024, min: 464 }, items: 3 },
+    mobile: { breakpoint: { max: 464, min: 0 }, items: 2 },
   };
 
   const handleCountryClick = (country: Country) => {
     setSelectedCountry(country);
+    setMessage("Select a Region"); // Set message when country is selected
   };
 
-  const handleRegionSelection = (region: string) => {
+  const handleRegionSelection = (region: string | any) => {
     setSelectedRegion(region);
     onRegionSelect();
   };
+
   const cardStyle: CSSProperties = {
     background: "white",
     borderRadius: "12px",
@@ -157,7 +114,6 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({
     marginRight: "auto",
   };
 
-  // Styles for the region selection container
   const regionContainerStyle: CSSProperties = {
     display: "flex",
     flexDirection: "column",
@@ -175,21 +131,6 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({
     marginRight: "auto",
     padding: "12px",
   };
-  const countryNameStyle: CSSProperties = {
-    fontSize: "18px",
-    fontWeight: "500",
-    textAlign: "center",
-    color: "#333",
-    marginTop: "10px",
-  };
-  const selectStyle: CSSProperties = {
-    fontFamily: "Barlow, sans-serif",
-    fontSize: "18px", // Increase font size
-    padding: "10px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-    marginTop: "20px",
-  };
 
   const flagImageStyle: CSSProperties = {
     width: "10rem",
@@ -199,6 +140,7 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({
     transition: "transform 0.3s ease",
     border: "2px solid transparent",
   };
+
   const carouselWrapperStyle: CSSProperties = {
     width: "100%",
     maxWidth: "1200px",
@@ -219,6 +161,7 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({
       <h1 style={{ textAlign: "center", padding: "6px", fontSize: "2.5rem" }}>
         Select a Country
       </h1>
+      {message && <h2 style={{ textAlign: "center", color: "#555" }}>{message}</h2>} {/* Display message */}
 
       {selectedCountry ? (
         <>
@@ -232,42 +175,35 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({
               <h3 style={{ textAlign: "center" }}>{selectedCountry.name}</h3>
             </div>
             <h3>Regions in {selectedCountry.name}</h3>
-            <select
-              style={selectStyle}
-              onChange={(e) => handleRegionSelection(e.target.value)}
-            >
-              <option value="">Select a region</option>
-              {selectedCountry.regions.map((region: any) => (
-                <option key={region} value={region}>
-                  {region}
-                </option>
-              ))}
-            </select>
+            <Autocomplete
+              options={selectedCountry.regions}
+              onChange={(e, value) => handleRegionSelection(value)}
+              renderInput={(params) => (
+                <TextField {...params} label="Select a region" variant="outlined" />
+              )}
+              sx={{ width: "100%", marginTop: "20px" }}
+            />
           </div>
           <Button
             variant="contained"
             sx={{ margin: 2 }}
-            onClick={() => {
-              setSelectedCountry(null);
-            }}
+            onClick={() => setSelectedCountry(null)}
           >
-            Select Country
+            Select different country
           </Button>
         </>
       ) : (
         <div style={carouselWrapperStyle}>
           <Carousel
             responsive={responsive}
-            infinite={true}
+            infinite
             autoPlay={false}
-            autoPlaySpeed={3000}
-            keyBoardControl={true}
+            keyBoardControl
             customTransition="transform 300ms ease-in-out"
             transitionDuration={300}
             containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile"]}
             itemClass="carousel-item"
-            centerMode={false}
           >
             {countries.map((country) => (
               <div
@@ -291,7 +227,7 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({
                   alt={`${country.name} flag`}
                   style={flagImageStyle}
                 />
-                <div style={countryNameStyle}>{country.name}</div>
+                <div style={{ fontSize: "18px", fontWeight: "500", textAlign: "center", color: "#333", marginTop: "10px" }}>{country.name}</div>
               </div>
             ))}
           </Carousel>
@@ -304,12 +240,10 @@ const CountrySelection: React.FC<CountrySelectionProps> = ({
             justify-content: center;
             padding: 10px;
           }
-          
           .country-card:hover {
             transform: scale(1.05) !important;
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
           }
-
           .react-multi-carousel-item {
             display: flex;
             justify-content: center;

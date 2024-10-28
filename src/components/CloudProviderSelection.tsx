@@ -78,6 +78,49 @@ const CloudProviderSelection: React.FC = () => {
     "Azure Functions Proxies",
   ];
 
+  const awsResources = [
+    "EC2 Instances",
+    "Lambda (serverless computing)",
+    "Elastic Kubernetes Service (EKS)",
+    "Elastic Beanstalk",
+    "AWS Batch",
+    "AWS Fargate",
+    "S3 (Simple Storage Service)",
+    "EBS (Elastic Block Store)",
+    "SQS (Simple Queue Service)",
+    "DynamoDB",
+    "RDS (Relational Database Service)",
+    "Aurora",
+    "Redshift",
+    "ElastiCache",
+    "VPC (Virtual Private Cloud)",
+    "CloudFront",
+    "Route 53",
+    "IAM (Identity and Access Management)",
+    "CloudWatch",
+    "CloudTrail",
+    "AWS Config",
+    "AWS Shield",
+    "AWS WAF (Web Application Firewall)",
+    "AWS Key Management Service (KMS)",
+    "AWS Secrets Manager",
+    "AWS CodePipeline",
+    "AWS CodeBuild",
+    "AWS CodeDeploy",
+    "AWS Step Functions",
+    "AWS Glue",
+    "AWS Data Pipeline",
+    "AWS IoT Core",
+    "AWS AppSync",
+    "AWS Amplify",
+    "AWS SageMaker",
+    "AWS QuickSight",
+    "AWS Elastic Load Balancing",
+    "AWS Direct Connect",
+    "AWS Snowball",
+    "AWS Outposts",
+  ];
+
   // Style for each provider card
   const providerStyle: CSSProperties = {
     background: "white",
@@ -154,21 +197,19 @@ const CloudProviderSelection: React.FC = () => {
       ) : (
         <div>
           <h2>Selected Provider: {selectedProvider}</h2>
-          {selectedProvider === "Azure" && (
-            <div style={{ width: "300px", margin: "20px auto" }}>
-              <Autocomplete
-                options={azureResources}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Search Azure Resources"
-                    variant="outlined"
-                  />
-                )}
-                style={{ fontFamily: "Barlow, sans-serif" }}
-              />
-            </div>
-          )}
+          <div style={{ width: "300px", margin: "20px auto" }}>
+            <Autocomplete
+              options={selectedProvider === "Azure" ? azureResources : awsResources}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={`Search ${selectedProvider} Resources`}
+                  variant="outlined"
+                />
+              )}
+              style={{ fontFamily: "Barlow, sans-serif" }}
+            />
+          </div>
 
           <div style={{ marginTop: "20px" }}>
             <button
